@@ -9,7 +9,7 @@ variable "location" {
 
 variable "naming_prefix" {
   type    = string
-  default = "srujanterra"
+  default = "srujanter2"
 }
 
 variable "tag_environment" {
