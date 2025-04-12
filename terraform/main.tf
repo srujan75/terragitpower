@@ -1,4 +1,5 @@
-provider "azurerm" {
+provider "azurerm" 
+{
   features {}
 
   client_id       = var.client_id
@@ -9,8 +10,8 @@ provider "azurerm" {
 
 terraform {
   backend "azurerm" {
-    resource_group_name  = "terraform-state-rg"
-    storage_account_name = "tfstatestorage1234"
+    resource_group_name  = "rg-terraform-state"
+    storage_account_name = "tfstatestoragereddy"
     container_name       = "tfstate"
     key                  = "terraform.tfstate"
   }

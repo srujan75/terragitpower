@@ -24,18 +24,18 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./terragitpower # change this if TF files are in a subfolder
+        working-directory: ./terraform # change this if TF files are in a subfolder
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ./terragitpower
+        working-directory: ./terraform
 
       - name: Terraform Plan
         run: terraform plan -input=false
-        working-directory: ./terragitpower
+        working-directory: ./terraform
 
       # Optional: Terraform Apply
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
-        working-directory: ./terragitpower
+        working-directory: ./terraform

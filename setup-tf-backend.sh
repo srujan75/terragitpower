@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Set variables
-resourceGroup="terraform-state-rg"
-storageAccount="tfstatestorage1234"
+resourceGroup="rg-terraform-state"
+storageAccount="tfstatestoragereddy"
 containerName="tfstate"
 location="eastus"
 
