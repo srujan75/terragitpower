@@ -1,22 +1,40 @@
-provider "azurerm" {
-  features {}
+name: Terraform CI/CD
 
-   client_id       = var.client_id
-   client_secret   = var.client_secret
-   subscription_id = var.subscription_id
-   tenant_id       = var.tenant_id
-}
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "rg-terraform-state"
-    storage_account_name = "tfstatestoragereddy"
-    container_name       = "tfstate"
-    key                  = "terraform.tfstate"
-  }
-}
+jobs:
+  terraform:
+    name: "Terraform Plan and Apply"
+    runs-on: ubuntu-latest
 
-resource "azurerm_resource_group" "example" {
-  name     = var.resource_group_name
-  location = var.location
-}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
+      - name: Terraform Init
+        run: terraform init
+        working-directory: ./terraform
+
+      - name: Terraform Validate
+        run: terraform validate
+        working-directory: ./terraform
+
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        working-directory: ./terraform
+
+      - name: Terraform Apply
+        if: github.ref == "refs/heads/main" && github.event_name == "push"
+        run: terraform apply -auto-approve -input=false
+        working-directory: ./terraform
