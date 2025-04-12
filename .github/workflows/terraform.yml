@@ -20,26 +20,24 @@ jobs:
       CONTAINER_NAME: ${{ secrets.CONTAINER_NAME }}
 
     steps:
-      # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      # Install the preferred version of Terraform CLI
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2.0.3
         with:
           terraform_version: 1.6.6
 
-      # Initialize Terraform with backend config
       - name: Terraform Init
         id: init
         run: terraform init -backend-config="storage_account_name=${{ env.STORAGE_ACCOUNT }}" -backend-config="container_name=${{ env.CONTAINER_NAME }}" -backend-config="resource_group_name=${{ env.RESOURCE_GROUP }}"
+        working-directory: ./terraform
 
-      # Run Terraform Plan
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
+        working-directory: ./terraform
 
-      # Run Terraform Apply
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: ./terraform
