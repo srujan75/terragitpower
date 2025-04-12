@@ -1,12 +1,23 @@
-variable "client_id" {}
-variable "client_secret" {}
-variable "subscription_id" {}
-variable "tenant_id" {}
-
-variable "resource_group_name" {
-  default = "rg-terraform-state"
-}
+## 
+# Variables
+##
 
 variable "location" {
-  default = "eastus"
+    type = string
+    default = "us east"
+}
+
+variable "naming_prefix" {
+  type    = string
+  default = "srujanterra"
+}
+
+variable "tag_environment" {
+  type    = string
+  default = "srujantest"
+}
+
+variable "tag_owner" {
+  type    = string
+  default = "srujanreddy"
 }
