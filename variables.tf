@@ -4,7 +4,7 @@ variable "subscription_id" {}
 variable "tenant_id" {}
 
 variable "resource_group_name" {
-  default = "example-rg"
+  default = "terraform-state-rg"
 }
 
 variable "location" {
