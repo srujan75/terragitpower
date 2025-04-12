@@ -20,22 +20,28 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.5.7  # or your desired version
+          terraform_version: 1.5.7  # Specify your desired Terraform version
+
+      - name: Display Current Working Directory
+        run: pwd
+
+      - name: List Files for Debugging
+        run: ls -R
 
       - name: Terraform Init
         run: terraform init
-        working-directory: ./terragitpower\terraform # change this if TF files are in a subfolder
+        working-directory: ./terragitpower  # Ensure this points to your correct Terraform folder
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: ./terragitpower\terraform
+        working-directory: ./terragitpower
 
       - name: Terraform Plan
         run: terraform plan -input=false
-        working-directory: ./terragitpower\terraform
+        working-directory: ./terragitpower
 
-      # Optional: Terraform Apply
+      # Optional: Apply only on push to main branch
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
-        working-directory: ./terragitpower\terraform
+        working-directory: ./terragitpower
